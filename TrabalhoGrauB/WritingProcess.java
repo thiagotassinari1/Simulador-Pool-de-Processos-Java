@@ -5,9 +5,15 @@ import java.io.IOException;
 public class WritingProcess extends Processo {
     private String expressao;
 
+    public WritingProcess(int pid, String expressao) {
+        super(pid, 2);
+        this.expressao = expressao;
+    }
 
-    public WritingProcess(String expressao) {
-        super(2);
+    // construtor sobrecarregado pra quando for criado o processo pela leitura do
+    // arquivo fila.txt
+    public WritingProcess(int pid, int tipo, String expressao) {
+        super(pid, tipo);
         this.expressao = expressao;
     }
 

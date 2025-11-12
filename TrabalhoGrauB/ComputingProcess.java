@@ -6,6 +6,12 @@ public class ComputingProcess extends Processo {
         this.expressao = expressao;
     }
 
+    // construtor sobrecarregado pra quando for criado o processo pela leitura do arquivo fila.txt
+    public ComputingProcess(int pid, int tipo, String expressao) {
+        super(pid, tipo);
+        this.expressao = expressao;
+    }
+
     public double soma(double n1, double n2) {
         return n1 + n2;
     }
@@ -48,4 +54,5 @@ public class ComputingProcess extends Processo {
         String infos = String.format("Pid: %d - Tipo: Computing Process | Expressão: %s", pid, expressao);
         System.out.println(infos);
     }
+
 }

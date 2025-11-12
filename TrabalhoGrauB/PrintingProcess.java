@@ -8,6 +8,12 @@ public class PrintingProcess extends Processo {
         this.filaProcessos = filaProcessos;
     }
 
+    // construtor sobrecarregado pra quando for criado o processo pela leitura do arquivo fila.txt
+    public PrintingProcess(int pid, int tipo, ArrayList<Processo> filaProcessos) {
+        super(pid, tipo);
+        this.filaProcessos = filaProcessos;
+    }
+
     @Override
     public void execute() {
         // verifica se o array ta vazio antes de executar o for
@@ -18,8 +24,10 @@ public class PrintingProcess extends Processo {
 
         for (int i = 0; i < filaProcessos.size(); i++) {
             // chama o imprimeInfo passando o pid que pega la do método da classe mãe
-            // não precisa de instaceOf pq o método imprimeInfo é herdado da classe abastrata Processo
-            // se fosse acessar um método específico que só tem em uma classe específica (não tem na classe mãe) precisaria do instaceOf
+            // não precisa de instaceOf pq o método imprimeInfo é herdado da classe
+            // abastrata Processo
+            // se fosse acessar um método específico que só tem em uma classe específica
+            // (não tem na classe mãe) precisaria do instaceOf
             filaProcessos.get(i).imprimeInfo(getPid());
         }
 

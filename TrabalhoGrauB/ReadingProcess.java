@@ -14,6 +14,12 @@ public class ReadingProcess extends Processo {
         this.filaProcessos = filaProcessos;
     }
 
+    // construtor sobrecarregado pra quando for criado o processo pela leitura do arquivo fila.txt
+    public ReadingProcess(int pid, int tipo, ArrayList<Processo> filaProcessos) {
+        super(pid, tipo);
+        this.filaProcessos = filaProcessos;
+    }
+
     @Override
     public void execute() {
         try (FileReader reader = new FileReader("computation.txt");
@@ -25,13 +31,6 @@ public class ReadingProcess extends Processo {
                 // Cria o ComputingProcess e adiciona na fila de processos
                 Processo novoProcesso = new ComputingProcess(expressao);
                 filaProcessos.add(novoProcesso);
-
-                // ver como que eu faço com o pid aqui também, pq eu to va criando um novo processo
-                /*
-                 * na real que acho q o pid ja vai automatico, pq la na classe mae "Processo" ta
-                 * incrementando o pid
-                 * automaticamente com +1 sempre
-                 */
 
             }
             System.out.println("Computation.txt lido com sucesso!");

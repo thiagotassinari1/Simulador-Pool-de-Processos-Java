@@ -1,8 +1,47 @@
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
-    public static void criarProcesso() {
+    public static int pid = 0;
+    public static void criarProcesso(Scanner sc, ArrayList<Processo> filaProcessos) {
+
+        System.out.println("Tipos de processos:");
+        // numero do tipo do processo
+        System.out.println("2 - Writing Process;");
+        System.out.println("3 - Reading Process;");
+        System.out.println("4 - Printing Process;");
+
+        System.out.print("Escolha: ");
+        int tipoProcesso = sc.nextInt();
+        sc.nextLine();
+
+        // identificar o tipo de processo
+        // 2 = WritingProcess
+        // 3 = ReadingProcess
+        // 4 = PrintingProcess
+
+        if (tipoProcesso == 2) {
+            System.out.println("Escreva uma expressão com dois operandos e um operador, divididos por espaço (n1 + n2): ");
+            System.out.println("Operadores possíveis: +, -, *, /");
+            System.out.print("Expressão: ");
+            String expressao = sc.nextLine();
+
+            Processo novoProcesso = new WritingProcess(pid, expressao);
+            filaProcessos.add(novoProcesso);
+            pid++;
+
+            System.out.println("-------------------------");
+            System.out.println("Informações do processo: " + "\n" +
+            "Pid: " + novoProcesso.getPid() + "\n" +
+            "Tipo: Writing Process" + "\n" +
+            "Expressão: " + expressao);
+            System.out.println("-------------------------");
+        } else if (tipoProcesso == 3) {
+            System.out.println();
+        }
 
     }
 
@@ -15,21 +54,66 @@ public class Main {
     }
 
     public static void salvarFila() {
-
+        // printingProcess e readingProcess vai salvar só o pid e tipo, o atributo salva
+        // vazio
+        // writing e computing salva pid, tipo e a expressao
     }
 
-    public static void carregarFila() {
-        // fazer um if do tipo pra cada linha que ler do arquivo
-        // vao ser 4 ifs, pq sao 4 tipos de processo
-        // if (tipo == 1) {
-        //     Processo novoProcesso = new ComputingProcess(expressao);
-        // }
+    public static void carregarFila(ArrayList<Processo> filaProcessos) {
+        try (FileReader reader = new FileReader("fila.txt");
+                Scanner sc = new Scanner(reader).useLocale(Locale.ENGLISH).useDelimiter(";|\\n")) {
+
+            while (sc.hasNext()) {
+                int pid = sc.nextInt();
+                int tipo = sc.nextInt();
+                String atributo = sc.next();
+
+                // Cria um novo processo com base no tipo do arquivo e adiciona na fila de
+                // processos
+                if (tipo == 1) {
+                    Processo novoProcesso = new ComputingProcess(pid, tipo, atributo);
+                    filaProcessos.add(novoProcesso);
+
+                } else if (tipo == 2) {
+                    Processo novoProcesso = new WritingProcess(pid, tipo, atributo);
+                    filaProcessos.add(novoProcesso);
+
+                } else if (tipo == 3) {
+                    Processo novoProcesso = new ReadingProcess(pid, tipo, filaProcessos);
+                    filaProcessos.add(novoProcesso);
+
+                } else if (tipo == 4) {
+                    Processo novoProcesso = new PrintingProcess(pid, tipo, filaProcessos);
+                    filaProcessos.add(novoProcesso);
+
+                }
+
+            }
+            System.out.println("Fila.txt lido com sucesso!");
+
+        } catch (IOException e) {
+            System.err.println("Erro ao carregar o arquivo fila.txt: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         ArrayList<Processo> filaProcessos = new ArrayList<>();
+
+        System.out.println("Escolha como iniciar o programa: ");
+        System.out.println("1 - Começar novo: ");
+        System.out.println("2 - Continuar (ler arquivo salvo): ");
+        System.out.print("Escolha: ");
+        int escolhaInicio = sc.nextInt();
+
+        if (escolhaInicio == 1) {
+            System.out.println("Novo sistema iniciado!");
+        } else if (escolhaInicio == 2) {
+            System.out.println("Continunado sistema salvo!");
+            carregarFila(filaProcessos);
+        }
 
         int escolha = -1;
         while (escolha != 0) {
@@ -38,26 +122,25 @@ public class Main {
             System.out.println("2 - Executar próximo;");
             System.out.println("3 - Executar processo específico;");
             System.out.println("4 - Salvar a fila de processos;");
-            System.out.println("5 - Carregar fila de processos do arquivo;");
             System.out.println("0 - Sair;");
             System.out.print("\nEscolha uma opção: ");
             escolha = sc.nextInt();
 
             switch (escolha) {
                 case 1:
-                    
+                    criarProcesso(sc, filaProcessos);
                     break;
                 case 2:
-                    
+
                     break;
                 case 3:
-                    
+
                     break;
                 case 4:
                     salvarFila();
                     break;
                 case 5:
-                    
+
                     break;
                 case 0:
                     System.out.println("Saindo do programa.");

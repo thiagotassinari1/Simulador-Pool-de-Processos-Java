@@ -1,7 +1,7 @@
 
 public abstract class Processo {
     private int tipo;
-    private static int pid = 0;
+    private int pid;
 
     /*
      * 1 = ComputingProcess
@@ -10,13 +10,12 @@ public abstract class Processo {
      * 4 = PrintingProcess
      */
 
-    public Processo(int tipo) {
+    // construtor pra quando ler uma fila salva no arquivo fila.txt
+    // o pid é estatico, então se o ultimo item da fila for pid 14, ele define o pid da classe inteira como 14, ai os próximos que criar (novos, alem da fila) vai ser 15, 16, 17... pq o fato do pid ser static, quando mexe nele em algum lugar, mexe pra classe inteira
+    // construtor sobrecarregado pra quando for criado o processo pela leitura do arquivo fila.txt
+    public Processo(int pid, int tipo) {
+        this.pid = pid;
         this.tipo = tipo;
-    }
-
-    public Processo(int tipo, int pid) {
-        this.tipo = 0;
-        this.pid++;
     }
 
     public int getPid() {
