@@ -1,6 +1,6 @@
 # 🚀 Simulação de Pool de Processos
 
-![Status](https://img.shields.io/badge/status-em%20andamento-blue)
+![Status](https://img.shields.io/badge/status-conclu%C3%ADdo-green)
 
 Este projeto é uma simulação de um sistema operacional simples para gerenciamento e execução de um pool de processos. Foi desenvolvido como o Trabalho Prático do Grau B para a disciplina de Programação Orientada a Objetos da Escola Politécnica da **Universidade do Vale do Rio dos Sinos (Unisinos)**.
 
